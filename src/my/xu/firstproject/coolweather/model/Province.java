@@ -1,4 +1,4 @@
-package model;
+package my.xu.firstproject.coolweather.model;
 
 
 public class Province {

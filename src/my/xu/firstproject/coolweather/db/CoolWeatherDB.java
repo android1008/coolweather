@@ -1,12 +1,11 @@
-package db;
+package my.xu.firstproject.coolweather.db;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import model.City;
-import model.County;
-import model.Province;
-import android.Manifest.permission;
+import my.xu.firstproject.coolweather.model.City;
+import my.xu.firstproject.coolweather.model.County;
+import my.xu.firstproject.coolweather.model.Province;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -17,7 +16,8 @@ public class CoolWeatherDB {
 	private static final int VERSION = 1;
 	private static CoolWeatherDB coolWeatherDB;
 	private SQLiteDatabase db;
-
+	
+  //创建数据库
 	private CoolWeatherDB(Context context) {
 		// TODO Auto-generated constructor stub
 		CoolWeatheropenHelper dbHelper = new CoolWeatheropenHelper(context,
@@ -25,6 +25,7 @@ public class CoolWeatherDB {
 		db = dbHelper.getWritableDatabase();
 	}
 
+	//获得类的实例
 	public synchronized static CoolWeatherDB getInstance(Context context) {
 
 		if (coolWeatherDB == null) {
@@ -112,16 +113,16 @@ public class CoolWeatherDB {
 
 	// 读取数据库某市的所有县
 
-	public List<County> loadCounty(int cityId) {
+	public List<County> loadCounties(int cityId) {
 		List<County> list = new ArrayList<County>();
 		Cursor cursor = db.query("County", null, "city_id = ?",
 				new String[] { String.valueOf(cityId) }, null, null, null);
 		if (cursor.moveToFirst()) {
 			do {
 				County county = new County();
-				county.setCityId(cursor.getInt(cursor.getColumnIndex("id")));
+				county.setId(cursor.getInt(cursor.getColumnIndex("id")));
 				county.setCountyName(cursor.getString(cursor.getColumnIndex("county_name")));
-				county.setCountyCode(cursor.getString(cursor.getColumnIndex("couny_code")));
+				county.setCountyCode(cursor.getString(cursor.getColumnIndex("county_code")));
 				county.setCityId(cityId);
 				list.add(county);
 			} while (cursor.moveToNext());
